@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../lib/jquery-1.8.3.js" type="text/javascript"></script>
+    <script src="../src/databind.js" type="text/javascript"></script>
+    <title>use databind.js</title>
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+
+<input type="text" value="" id="txt1" style="width:100px"/><br/>
+<input type="checkbox" value="yes">yes<br/>
+<input type="checkbox" value="no">no<br/>
+<select id="aa"></select>
+
+<div id="div1" style="width:100px;height: 30px;border: 1px solid #ffa8a8;"></div>
+<script>
+    var vm = {
+        message: 'hello',
+        checked: true,
+        datasource: [
+            {'text': 'a', value: '1'},
+            {'text': 'b', value: '2'},
+            {'text': 'c', value: '3'},
+            {'text': 'd', value: '4'}
+        ]
+    };
+
+    $("#txt1").databind(vm, 'message', 'value');
+    $("#div1").databind(vm, 'message', "innerText");
+    $("input[type='checkbox']").databind(vm, 'checked', "checked");
+    //    $("#aa").databind(vm, 'datasource', 'value');
+
+</script>
+</body>
+</html>
