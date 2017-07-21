@@ -20,18 +20,23 @@
     var vm = {
         message: 'hello',
         checked: true,
-        datasource: [
-            {'text': 'a', value: '1'},
-            {'text': 'b', value: '2'},
-            {'text': 'c', value: '3'},
-            {'text': 'd', value: '4'}
-        ]
+        dataSource: {
+            selectedText: null,
+            selectedValue: null,
+            selectedIndex: -1,
+            data: [
+                {'text': 'a', value: '1'},
+                {'text': 'b', value: '2'},
+                {'text': 'c', value: '3'},
+                {'text': 'd', value: '4'}
+            ]
+        }
     };
 
     $("#txt1").databind(vm, 'message', 'value');
     $("#div1").databind(vm, 'message', "innerText");
     $("input[type='checkbox']").databind(vm, 'checked', "checked");
-    //    $("#aa").databind(vm, 'datasource', 'value');
+    //    $("#aa").databind(vm, 'dataSource', 'value');
 
 </script>
 </body>
