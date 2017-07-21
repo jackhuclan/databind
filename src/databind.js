@@ -10,7 +10,7 @@ $.fn.extend({
                     }
                 },
                 update: function (node) {
-                    node.onVmChange.call(node, vm);
+                    node.onVmChange(node, vm);
                 }
             };
 
@@ -32,11 +32,11 @@ $.fn.extend({
             var node = this;
             node.vmProp = prop;
             node.elAttr = elAttr;
-            node.onElementChange = function (el, model) {
-                model[el.vmProp] = el[el.elAttr];
+            node.onElementChange = function (nd, model) {
+                model[nd.vmProp] = nd[nd.elAttr];
             };
-            node.onVmChange = function (el, model) {
-                el[el.elAttr] = model[el.vmProp];
+            node.onVmChange = function (nd, model) {
+                nd[nd.elAttr] = model[nd.vmProp];
             };
 
             if (elAttr == "innerText" || elAttr == "innerHTML") {
@@ -48,13 +48,13 @@ $.fn.extend({
                     var elementType = node.type.toUpperCase();
                     if (elementType == "TEXT" || elementType == "PASSWORD") {
                         node.addEventListener('input', function (e) {
-                            node.onElementChange.call(el, vm);
+                            e.target.onElementChange(e.target, vm);
                         });
                     }
 
                     if (elementType == "CHECKBOX" || elementType == "RADIO") {
                         node.addEventListener('change', function (e) {
-                            node.onElementChange.call(el, vm);
+                            e.target.onElementChange(e.target, vm);
                         });
                     }
                 }
@@ -63,7 +63,7 @@ $.fn.extend({
                     //todo: check datasource is object and must has data property
                     //todo: reassign onElementChange, onVmChange
                     node.addEventListener('change', function (e) {
-                        node.onElementChange.call(el, vm);
+                        e.target.onElementChange(e.target, vm);
                     });
                 }
 
