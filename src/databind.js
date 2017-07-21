@@ -1,3 +1,12 @@
+$.extend({
+    isString: function (obj) {
+        return typeof obj === 'string';
+    },
+    isObject: function (obj) {
+        return typeof obj === 'object';
+    }
+});
+
 $.fn.extend({
     databind: function (vm, prop, elAttr) {
         vm = vm || {};
@@ -29,6 +38,10 @@ $.fn.extend({
         }
 
         this.each(function () {
+            if (!vm.hasOwnProperty(vmProp)) {
+                throw new Error(vmProp + " doesn't exist in this view model!");
+            }
+
             var node = this;
             node.vmProp = prop;
             node.elAttr = elAttr;
@@ -41,7 +54,7 @@ $.fn.extend({
 
             if (elAttr == "innerText" || elAttr == "innerHTML") {
                 $(this).empty();
-            };
+            }
 
             if (node.nodeType === 1) {
                 if (node.tagName.toUpperCase() == "INPUT") {
@@ -59,7 +72,10 @@ $.fn.extend({
                     }
                 }
 
-                if (node.tagName.toUpperCase() == "SELECT"){
+                if (node.tagName.toUpperCase() == "SELECT") {
+                    if (!vm[vmProp].hasOwnProperty("data")) {
+                        throw new Error("data doesn't exist in this view model!");
+                    }
                     //todo: check datasource is object and must has data property
                     //todo: reassign onElementChange, onVmChange
                     node.addEventListener('change', function (e) {
